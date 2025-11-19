@@ -11,7 +11,8 @@ A comprehensive skills library of proven techniques, patterns, and workflows for
 - **Meta Skills** - Creating, testing, and sharing skills
 
 Plus:
-- **Slash Commands** - `/superpowers:brainstorm`, `/superpowers:write-plan`, `/superpowers:execute-plan`
+- **Slash Commands** - `/superpowers:brainstorm`, `/superpowers:write-plan`, `/superpowers:decompose-plan`
+- **Parallel Execution** - Run up to 2 subagents simultaneously for independent tasks
 - **Automatic Integration** - Skills activate automatically when relevant
 - **Consistent Workflows** - Systematic approaches to common engineering tasks
 
@@ -47,33 +48,41 @@ Check that commands appear:
 # Should see:
 # /superpowers:brainstorm - Interactive design refinement
 # /superpowers:write-plan - Create implementation plan
-# /superpowers:execute-plan - Execute plan in batches
+# /superpowers:decompose-plan - Decompose plan for parallel execution
 ```
 
 ### Codex (Experimental)
 
 **Note:** Codex support is experimental and may require refinement based on user feedback.
 
-Tell Codex to fetch https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md and follow the instructions.
+Tell Codex to fetch https://raw.githubusercontent.com/seanGSISG/crispy-claude/refs/heads/main/.codex/INSTALL.md and follow the instructions.
 
 ## Quick Start
 
-### Using Slash Commands
+### Standard Workflow (Parallel Execution)
 
-**Brainstorm a design:**
+**1. Brainstorm a design:**
 ```
 /superpowers:brainstorm
 ```
 
-**Create an implementation plan:**
+**2. Create an implementation plan:**
 ```
 /superpowers:write-plan
 ```
 
-**Execute the plan:**
+**3. Decompose plan for parallel execution:**
 ```
-/superpowers:execute-plan
+/superpowers:decompose-plan
 ```
+
+**4. Execute with parallel subagents:**
+
+After decomposition, use the `parallel-subagent-driven-development` skill to run up to 2 subagents simultaneously on independent tasks.
+
+### Alternative: Sequential Execution
+
+Use `/superpowers:execute-plan` for manual batch execution without parallelization.
 
 ### Automatic Skill Activation
 
@@ -100,13 +109,15 @@ Skills activate automatically when relevant. For example:
 **Collaboration** (`skills/collaboration/`)
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
+- **decomposing-plans** - Split plans into parallel task files (NEW!)
+- **parallel-subagent-driven-development** - Execute with up to 2 parallel subagents (NEW!)
 - **executing-plans** - Batch execution with checkpoints
+- **subagent-driven-development** - Fast iteration with quality gates (sequential)
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist
 - **receiving-code-review** - Responding to feedback
 - **using-git-worktrees** - Parallel development branches
 - **finishing-a-development-branch** - Merge/PR decision workflow
-- **subagent-driven-development** - Fast iteration with quality gates
 
 **Meta** (`skills/meta/`)
 - **writing-skills** - Create new skills following best practices
@@ -120,6 +131,7 @@ All commands are thin wrappers that activate the corresponding skill:
 
 - **brainstorm.md** - Activates the `brainstorming` skill
 - **write-plan.md** - Activates the `writing-plans` skill
+- **decompose-plan.md** - Activates the `decomposing-plans` skill (NEW!)
 - **execute-plan.md** - Activates the `executing-plans` skill
 
 ## How It Works
@@ -161,7 +173,53 @@ Skills update automatically when you update the plugin:
 
 MIT License - see LICENSE file for details
 
+## New Features: Parallel Execution
+
+### What's New
+
+**Decompose plans into parallel tasks:**
+- Split monolithic plans into individual task files
+- Automatic dependency analysis
+- Identify tasks that can run in parallel
+
+**Execute with parallel subagents:**
+- Run up to 2 subagents simultaneously
+- 90% context savings (task files vs monolithic plan)
+- 40% time savings for parallelizable tasks
+- Same quality gates (code review after each batch)
+
+### Workflow Comparison
+
+**Before (Sequential):**
+```
+/brainstorm → /write-plan → /execute-plan
+- Manual batch execution
+- One task at a time
+- 5 tasks × 10 min = 50 min
+```
+
+**After (Parallel):**
+```
+/brainstorm → /write-plan → /decompose-plan → parallel-subagent-driven-development
+- Automatic parallelization
+- Up to 2 tasks simultaneously
+- 3 batches × 10 min = 30 min (40% faster!)
+```
+
+### Example Output Structure
+
+```
+docs/plans/
+├── 2025-01-18-user-auth.md          # Monolithic plan
+└── tasks/
+    └── 2025-01-18-user-auth/         # Plan-specific subfolder
+        ├── user-auth-task-01.md      # Individual task files
+        ├── user-auth-task-02.md
+        ├── user-auth-task-03.md
+        └── user-auth-manifest.json   # Parallel batches + dependencies
+```
+
 ## Support
 
-- **Issues**: https://github.com/obra/superpowers/issues
-- **Marketplace**: https://github.com/obra/superpowers-marketplace
+- **Repository**: https://github.com/seanGSISG/crispy-claude
+- **Issues**: https://github.com/seanGSISG/crispy-claude/issues

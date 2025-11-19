@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "crispyclaude",
+      "name": "cc",
       "description": "Enhanced Claude Code skills with parallel execution, TDD, debugging, and collaboration patterns",
       "version": "3.4.1",
       "source": "./crispyclaude",

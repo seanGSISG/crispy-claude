@@ -11,7 +11,7 @@ Enhanced Claude Code skills with parallel execution, proven techniques, patterns
 - **Meta Skills** - Creating, testing, and sharing skills
 
 Plus:
-- **Slash Commands** - `/crispyclaude:brainstorm`, `/crispyclaude:write-plan`, `/crispyclaude:decompose-plan`
+- **Slash Commands** - `/cc:brainstorm`, `/cc:write-plan`, `/cc:decompose-plan`
 - **Parallel Execution** - Run up to 2 subagents simultaneously for independent tasks
 - **Automatic Integration** - Skills activate automatically when relevant
 - **Consistent Workflows** - Systematic approaches to common engineering tasks
@@ -25,7 +25,7 @@ In Claude Code, add the marketplace and install:
 
 ```bash
 /plugin marketplace add seanGSISG/crispy-claude
-/plugin install crispyclaude@crispy-claude
+/plugin install cc@crispy-claude
 ```
 
 ### Verify Installation
@@ -38,9 +38,9 @@ Check that commands appear:
 
 ```
 # Should see:
-# /crispyclaude:brainstorm - Interactive design refinement
-# /crispyclaude:write-plan - Create implementation plan
-# /crispyclaude:decompose-plan - Decompose plan for parallel execution
+# /cc:brainstorm - Interactive design refinement
+# /cc:write-plan - Create implementation plan
+# /cc:decompose-plan - Decompose plan for parallel execution
 ```
 
 ### Codex (Experimental)
@@ -55,17 +55,17 @@ Tell Codex to fetch https://raw.githubusercontent.com/seanGSISG/crispy-claude/re
 
 **1. Brainstorm a design:**
 ```
-/crispyclaude:brainstorm
+/cc:brainstorm
 ```
 
 **2. Create an implementation plan:**
 ```
-/crispyclaude:write-plan
+/cc:write-plan
 ```
 
 **3. Decompose plan for parallel execution:**
 ```
-/crispyclaude:decompose-plan
+/cc:decompose-plan
 ```
 
 **4. Execute with parallel subagents:**
@@ -74,7 +74,7 @@ After decomposition, use the `parallel-subagent-driven-development` skill to run
 
 ### Alternative: Sequential Execution
 
-Use `/crispyclaude:execute-plan` for manual batch execution without parallelization.
+Use `/cc:execute-plan` for manual batch execution without parallelization.
 
 ### Automatic Skill Activation
 
@@ -158,7 +158,7 @@ See `skills/meta/writing-skills/SKILL.md` for the complete guide.
 Skills update automatically when you update the plugin:
 
 ```bash
-/plugin update crispyclaude
+/plugin update cc
 ```
 
 ## License

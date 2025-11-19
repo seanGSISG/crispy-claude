@@ -7,10 +7,10 @@
   },
   "plugins": [
     {
-      "name": "superpowers",
-      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
+      "name": "crispyclaude",
+      "description": "Enhanced Claude Code skills with parallel execution, TDD, debugging, and collaboration patterns",
       "version": "3.4.1",
-      "source": "./superpowers",
+      "source": "./crispyclaude",
       "author": {
         "name": "seanGSISG",
         "email": "seanGSISG@mail.com"

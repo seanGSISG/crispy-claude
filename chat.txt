@@ -1,0 +1,1522 @@
+
+╭─── Claude Code v2.0.47 ──────────────────────────────────────────────────────╮
+│                             │ Tips for getting started                       │
+│      Welcome back Sean!     │ Run /init to create a CLAUDE.md file with ins… │
+│                             │ ────────────────────────────────────────────── │
+│           ▐▛███▜▌           │ Recent activity                                │
+│          ▝▜█████▛▘          │ No recent activity                             │
+│            ▘▘ ▝▝            │                                                │
+│                             │                                                │
+│   Sonnet 4.5 · Claude Max   │                                                │
+│   /workspaces/superpowers   │                                                │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+> /cc:brainstorm is running… how can we further improve our cripyclaude 
+framework?  I have some examples of another framework in 
+docs/plans/25-11-18-improve-superpowers/examples/humanlayer and some MCP 
+documentation in 
+docs/plans/25-11-18-improve-superpowers/examples/superclaude/mcp-descriptions 
+
+● I'll help you brainstorm improvements to the CrispyClaude framework by
+  first understanding the current state and examining the examples you've
+  provided.
+
+> The "brainstorming" skill is running 
+
+● I'll help you brainstorm improvements to CrispyClaude. Let me start by
+  understanding the current state of the framework and examining the
+  examples you mentioned.
+
+● serena - list_dir (MCP)(relative_path: ".", recursive: false)
+  ⎿ {                                                                      
+      "result": "Error: No active project. Ask the user to provide the proj
+    ect path or to select a project from this list of known projects: ['sup
+    … +2 lines (ctrl+o to expand)
+
+
+
+● serena - list_dir (MCP)(relative_path: "docs/plans/25-11-18-improve-superpower
+                         s/examples/humanlayer", recursive: true)
+  ⎿ {                                                                      
+      "result": "Error: No active project. Ask the user to provide the proj
+    ect path or to select a project from this list of known projects: ['sup
+    … +2 lines (ctrl+o to expand)
+
+
+
+● serena - list_dir (MCP)(relative_path: "docs/plans/25-11-18-improve-superpower
+                         s/examples/superclaude/mcp-descriptions", recursive:
+                         true)
+  ⎿ {                                                                      
+      "result": "Error: No active project. Ask the user to provide the proj
+    ect path or to select a project from this list of known projects: ['sup
+    … +2 lines (ctrl+o to expand)
+
+
+
+● Read(README.md)
+  ⎿  Read 218 lines
+
+● serena - activate_project (MCP)(project: "superpowers")
+  ⎿ {                                                                      
+      "result": "The project with name 'superpowers' at /workspaces/superpo
+    wers is activated.\nProgramming languages: bash; file encoding: utf-8"
+    }
+
+
+● serena - list_dir (MCP)(relative_path: "docs/plans/25-11-18-improve-superpower
+                         s/examples/humanlayer", recursive: true)
+  ⎿ {                                                                      
+      "result": "{\"dirs\": [\"docs/plans/25-11-18-improve-superpowers/exam
+    ples/humanlayer/agents-humanlayer\", \"docs/plans/25-11-18-improve-supe
+    … +19 lines (ctrl+o to expand)
+
+
+
+● serena - list_dir (MCP)(relative_path: "docs/plans/25-11-18-improve-superpower
+                         s/examples/superclaude/mcp-descriptions", recursive:
+                         true)
+  ⎿ {                                                                      
+      "result": "{\"dirs\": [], \"files\": [\"docs/plans/25-11-18-improve-s
+    uperpowers/examples/superclaude/mcp-descriptions/MCP_Chrome-DevTools.md
+    … +9 lines (ctrl+o to expand)
+
+
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/humanlayer/agents-humanl
+      ayer/web-search-researcher.md)
+  ⎿  Read 110 lines
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/humanlayer/agents-humanl
+      ayer/codebase-analyzer.md)
+  ⎿  Read 144 lines
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/humanlayer/commands-huma
+      nlayer/create_plan.md)
+  ⎿  Read 450 lines
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/superclaude/mcp-descript
+      ions/MCP_Serena (1).md)
+  ⎿  Read 32 lines
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/superclaude/mcp-descript
+      ions/MCP_Context7.md)
+  ⎿  Read 30 lines
+
+● Now let me look at a few more example files to understand the patterns
+  better:
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/humanlayer/commands-huma
+      nlayer/iterate_plan.md)
+  ⎿  Read 250 lines
+
+● Read(docs/plans/25-11-18-improve-superpowers/examples/superclaude/mcp-descript
+      ions/MCP_Magic.md)
+  ⎿  Read 31 lines
+
+● serena - list_dir (MCP)(relative_path: ".claude/skills", recursive: true)
+  ⎿ {                                                                      
+      "result": "{\"dirs\": [\".claude/skills/sharing-skills\", \".claude/s
+    kills/writing-skills\", \".claude/skills/testing-skills-with-subagents\
+    … +43 lines (ctrl+o to expand)
+
+
+
+● Great! Now I have a good understanding of both CrispyClaude and the
+  example frameworks. Let me start the brainstorming process by asking
+  targeted questions to understand your vision for improvements.
+
+  Based on my review of:
+  - CrispyClaude: A skills-based framework with parallel execution, TDD,
+  debugging, and collaboration workflows
+  - HumanLayer examples: Specialized agents (web-search-researcher,
+  codebase-analyzer) and plan management commands
+  - SuperClaude MCP descriptions: Clear trigger-based tool selection with
+  "Choose When" decision criteria
+
+  I can see several potential improvement areas. Let me start with the most
+  important question:
+
+  What specific challenges or limitations are you experiencing with 
+  CrispyClaude that you'd like to address?
+
+  A) The skills system is too generic - you want more specialized,
+  purpose-built agents like HumanLayer's approach
+  B) Tool/MCP server selection is unclear - you want better guidance like
+  SuperClaude's decision criteria
+  C) The workflow feels too rigid - you want more flexibility in how skills
+  are invoked
+  D) Something else entirely
+
+> I want to enhance the proccess of brainstorm --> research with mcp (with 
+skills and a command, subagents) --> write the plan --> 
+.claude/skills/decomposing-plans/SKILL.md (by the way we have a missing 
+command for this) --> branstormv2 to review the plan for completeness (with 
+skills, command, subagents) then update the plan if necessary --> to execute
+ plan with .claude/skills/parallel-subagent-driven-development/SKILL.md 
+(.claude/skills/executing-plans/SKILL.md should be updated to always use 
+parallel subagent driven development) --> once all tasks are done use serena
+ MCP to save memory --> create PR (skill + command) 
+
+● Excellent! You want to create a complete, opinionated workflow from
+  ideation to PR. Let me make sure I understand your vision correctly, then
+  we can refine it together.
+
+  You're envisioning this flow:
+  brainstorm → research → write-plan → decompose-plan → review-plan →
+  execute-plan → save-memory → create-pr
+
+  Let me ask about the research step first, since this seems like a critical
+   addition:
+
+  What role should the research step play in this workflow?
+
+  A) Deep discovery - Comprehensive codebase analysis using specialized
+  agents (like HumanLayer's codebase-analyzer, codebase-locator) to
+  understand current implementation before planning
+
+  B) External context - Fetch library docs (Context7), web research
+  (Tavily/web-search-researcher), and other external knowledge to inform the
+   approach
+
+  C) Both combined - A comprehensive research phase that covers both
+  codebase analysis AND external knowledge gathering in parallel
+
+  D) Different focus - You have a different vision for what "research" means
+   in this context
+
+> C 
+
+● Perfect! So the research step will orchestrate parallel subagents for both
+   internal codebase understanding and external knowledge gathering.
+
+  Now let's clarify the review-plan step (your "brainstormv2"):
+
+  What should trigger a plan update during the review phase?
+
+  A) Automatic validation - The review agent runs a checklist (missing
+  phases, vague success criteria, no test strategy, etc.) and flags issues,
+  prompting the user whether to fix them
+
+  B) Interactive refinement - Similar to the original brainstorm process,
+  but focused on plan quality - ask questions about gaps, propose
+  improvements, iterate until approved
+
+  C) Passive check - Just present findings about completeness/quality, let
+  the user decide whether to manually update or proceed
+
+  D) Hybrid approach - Run automatic validation first, then if issues found,
+   enter interactive refinement mode
+
+> B but after .claude/skills/decomposing-plans/SKILL.md the user should be 
+prompted would you like to review the plan or go straight to execute plan 
+with .claude/skills/parallel-subagent-driven-development/SKILL.md 
+(.claude/skills/executing-plans/SKILL.md should 
+be updated to always use parallel subagent driven development) 
+
+● Excellent! So after decomposition, the user gets a choice:
+  - Review plan → Interactive refinement focused on completeness/quality
+  - Execute immediately → Skip to parallel execution
+
+  Now let's talk about the save-memory step with Serena MCP:
+
+  What should be captured in the memory after execution completes?
+
+  A) Implementation learnings - What worked, what didn't, gotchas
+  encountered, patterns discovered during execution
+
+  B) Project context - Updated understanding of the codebase architecture,
+  key components, conventions learned
+
+  C) Decision record - Why certain approaches were chosen, trade-offs made,
+  alternatives considered
+
+  D) All of the above - Comprehensive memory capture covering learnings,
+  context, and decisions
+
+> d 
+
+● Great! Comprehensive memory capture makes sense - you want to build
+  institutional knowledge over time.
+
+  Now for the final piece, the create-PR step:
+
+  What should the create-PR workflow include beyond the basic PR creation?
+
+  A) Smart PR description - Auto-generate PR description from the plan,
+  execution results, and changes made
+
+  B) Quality gates - Run final verification (tests, lints, build) before
+  creating PR, include results in PR body
+
+  C) Review preparation - Generate reviewer checklist, highlight risky
+  changes, suggest reviewers based on file ownership
+
+  D) Minimal approach - Just create the PR with a basic description and link
+   to the plan, keep it simple
+
+  E) Combination - Mix of the above (which ones?)
+
+> A 
+
+● Perfect! Auto-generated PR descriptions from all the context you've
+  already created.
+
+  Now let's talk about workflow orchestration:
+
+  How should these steps be connected together?
+
+  A) Individual commands - Each step is a separate command (/cc:research,
+  /cc:decompose-plan, /cc:review-plan, /cc:save-memory, /cc:create-pr), user
+   invokes them manually in sequence
+
+  B) Smart progression - Each skill knows the next step and prompts: "Ready
+  to move to [next step]?" with a single confirmation
+
+  C) Master orchestrator - One /cc:full-workflow command that runs the
+  entire flow from brainstorm to PR, with approval gates at key points
+
+  D) Hybrid - Individual commands for flexibility, PLUS an orchestrator
+  command for the full flow
+
+> d 
+  ⎿  Interrupted · What should Claude do instead?
+
+> yea D with C but I guess D includes C 
+
+● Exactly right! D includes C - you get both flexibility (individual
+  commands) and convenience (full workflow orchestrator).
+
+  Now let's dive into the research step's specialized agents:
+
+  Looking at the HumanLayer examples, they have agents like:
+  - codebase-analyzer - understands HOW code works
+  - codebase-locator - finds relevant files
+  - web-search-researcher - external research
+
+  Which specialized research agents should CrispyClaude include?
+
+  A) Mirror HumanLayer - Create similar agents: codebase-analyzer,
+  codebase-locator, web-researcher
+
+  B) MCP-focused - Agents that know how to use specific MCPs:
+  serena-explorer (uses Serena), context7-researcher (uses Context7),
+  web-researcher (uses Tavily/WebSearch)
+
+  C) Task-focused - Agents based on research goals: architecture-mapper,
+  pattern-finder, dependency-analyzer, best-practices-researcher
+
+  D) Hybrid approach - Combine MCP-focused capabilities with clear task
+  specializations
+
+> B but they should have corresponding skills to know how to use the MCP 
+tools effectively 
+
+● Excellent! So each MCP-focused agent has a corresponding skill that
+  encodes best practices for using that MCP effectively. For example:
+  - Skill: using-serena-for-exploration → Agent: serena-explorer
+  - Skill: using-context7-for-docs → Agent: context7-researcher
+  - Skill: using-web-search → Agent: web-researcher
+
+  Now let's clarify the review-plan skill (your interactive refinement
+  step):
+
+  What specific aspects should the plan review focus on?
+
+  A) Completeness - Missing phases, unclear dependencies, no rollback
+  strategy, missing edge cases
+
+  B) Quality - Vague success criteria, missing file:line references, no test
+   strategy, unclear verification steps
+
+  C) Feasibility - Overly ambitious scope, missing prerequisites,
+  unrealistic assumptions, technical gaps
+
+  D) All three - Comprehensive review covering completeness, quality, and
+  feasibility
+
+> D -- definitely include a scope creep check 
+
+● Perfect! Comprehensive plan review with explicit scope creep detection -
+  checking against the original "What We're NOT Doing" section and flagging
+  feature bloat.
+
+  Now let's talk about workflow resilience:
+
+  How should the orchestrator handle interruptions or failures?
+
+  A) Checkpoint system - Save progress at each step (research results, plan
+  drafts, decomposition output), allow resuming from any checkpoint
+
+  B) Fail fast - If any step fails (research finds blockers, review reveals
+  major gaps, execution errors), stop and require manual intervention before
+   continuing
+
+  C) Smart retry - Allow re-running individual steps (re-research, re-plan,
+  re-review) without restarting the entire workflow
+
+  D) All of the above - Checkpoints for resumption + fail fast for safety +
+  smart retry for flexibility
+
+> It should use the built in check of 
+.claude/skills/subagent-driven-development/SKILL.md and 
+.claude/skills/parallel-subagent-driven-development/SKILL.md -- but with 
+previous improvements 
+.claude/skills/parallel-subagent-driven-development/SKILL.md is always the 
+default implementation 
+
+● Got it! The workflow leverages the existing resilience mechanisms in
+  parallel-subagent-driven-development (which is now the default), so we
+  don't need to reinvent failure handling.
+
+  Now let's talk about command naming and organization:
+
+  You'll need these new commands:
+  - /cc:research (or /cc:do-research?)
+  - /cc:decompose-plan (missing)
+  - /cc:review-plan (or /cc:check-plan?)
+  - /cc:save-memory (or /cc:capture-learnings?)
+  - /cc:create-pr (or /cc:make-pr?)
+  - /cc:full-workflow (or /cc:ship-it? /cc:end-to-end?)
+
+  What naming pattern should we follow?
+
+  A) Action-based - Simple verbs: research, decompose-plan, review-plan,
+  save-memory, create-pr, ship-it
+
+  B) Process-oriented - Descriptive: do-research, check-plan,
+  capture-learnings, make-pr, full-workflow
+
+  C) Workflow stages - Match the flow: step1-research, step2-write-plan,
+  step3-decompose, etc. (probably not this one)
+
+  D) Your preference - You have specific names in mind?
+
+> - /cc:research
+  - /cc:parse-plan 
+  - /cc:review-plan 
+  - /cc:save 
+  - /cc:pr 
+  - /cc:crispy 
+
+● Love it! /cc:crispy for the full workflow is perfect. 🔥
+
+  Now let's clarify the crispy workflow entry points:
+
+  When someone runs /cc:crispy, where should it start?
+
+  A) Always from scratch - Always begins with brainstorm, assumes you're
+  starting a new feature
+
+  B) Smart detection - Checks what exists (no plan → start with brainstorm,
+  has plan but not decomposed → start with parse-plan, etc.) and resumes
+  from the right point
+
+  C) Explicit parameter - /cc:crispy starts from brainstorm, but /cc:crispy 
+  from=review-plan lets you jump in anywhere
+
+  D) Interactive prompt - Asks "Where do you want to start?" and shows
+  available entry points based on what exists
+
+> A,  but that reminds me and I should clarify,  - /cc:save  should also be 
+able to be used if you had to stop before completion of the full plan.  we 
+should have a  - /cc:resume that loads the serena memory save 
+
+● Excellent addition! So:
+  - /cc:crispy - Always starts fresh with brainstorm
+  - /cc:save - Save progress at ANY point (not just completion)
+  - /cc:resume - Load saved state and continue from where you left off
+
+  What should /cc:save capture when used mid-workflow vs. at completion?
+
+  A) Context-aware - Automatically detects workflow stage and saves
+  appropriate context:
+  - During research: Research findings, sources, codebase insights
+  - During planning: Plan drafts, design decisions, alternatives considered
+  - During execution: Completed tasks, in-progress work, blockers
+  encountered
+  - At completion: Full implementation learnings, patterns, gotchas
+
+  B) Uniform format - Always saves the same structure (current stage, all
+  artifacts, notes) regardless of where you are
+
+  C) User-guided - Prompts "What would you like to note before saving?" and
+  lets user add context to the automatic capture
+
+  D) Combination - Context-aware automatic capture + optional user notes
+
+> a 
+
+● Perfect! Context-aware saves that capture exactly what's relevant at each
+  workflow stage.
+
+  Now let's clarify resume behavior:
+
+  When someone runs /cc:resume, what should happen?
+
+  A) Smart continuation - Loads the saved context, shows a summary ("You
+  were at [stage] with [progress]"), then automatically prompts for the next
+   logical step
+
+  B) Status check - Loads context, displays comprehensive status report,
+  waits for user to manually choose next action (/cc:review-plan, /cc:pr,
+  etc.)
+
+  C) Interactive recovery - Shows what was saved, asks "What would you like
+  to do?" with context-appropriate options (e.g., if stopped during
+  execution: "Continue execution / Re-review plan / Start over")
+
+  D) Direct continuation - Immediately jumps back into the exact workflow
+  step where you left off, no questions asked
+
+> The user should always do /cc:resume and then they paste the path or 
+filename of the serena memory
+
+by the way the serena memory should always be in the format of 
+YYYY-MM-DD-<feature-name>-<context-aware>.md
+
+Where context-aware = one of 
+ A) Context-aware - Automatically detects workflow stage and saves 
+appropriate context:
+  - During research: Research findings, sources, codebase insights
+  - During planning: Plan drafts, design decisions, alternatives considered
+  - During execution: Completed tasks, in-progress work, blockers 
+encountered
+  - At completion: Full implementation learnings, patterns, gotchas
+
+ie research, planning, execution, complete 
+
+● Perfect! So memory files follow a clear naming pattern:
+  YYYY-MM-DD-<feature-name>-<stage>.md where stage is:
+  - research
+  - planning
+  - execution
+  - complete
+
+  After /cc:resume path/to/2025-11-19-user-auth-execution.md loads the 
+  memory, what should happen?
+
+  A) Automatic progression - Reads the -execution.md memory, understands you
+   were executing, immediately continues with the next pending task from the
+   decomposed plan
+
+  B) Confirmation gate - Loads context, shows summary of what was in
+  progress, asks "Continue execution?" before proceeding
+
+  C) Smart assessment - Loads memory, analyzes what was completed vs. what
+  remains, presents options: "3 tasks done, 2 remaining. Continue execution
+  / Review progress / Adjust plan?"
+
+  D) Manual handoff - Just loads the context into the conversation, user
+  decides what command to run next (/cc:pr, continue manually, etc.)
+
+> c and prompts the user if they want to continue with the next step in the 
+crispy workflow or something else 
+
+● Excellent! Smart assessment with flexible options - guides the user but
+  doesn't force them.
+
+  Now let's clarify the research step's placement in the workflow:
+
+  Currently brainstorm asks questions to refine the idea. With the new
+  research step:
+
+  When should research happen relative to brainstorming?
+
+  A) Brainstorm first - brainstorm (refine the idea) → research (validate
+  feasibility with codebase + external knowledge) → write-plan
+
+  B) Research first - research (gather context) → brainstorm (refine with
+  knowledge) → write-plan
+
+  C) Integrated - brainstorm automatically spawns research subagents as
+  needed during the conversation, no separate /cc:research command needed
+
+  D) Optional - brainstorm → optionally run /cc:research if needed →
+  write-plan (research is available but not mandatory in the flow)
+
+> D brainstorm -> write plan -> option research 
+
+● Interesting! Let me make sure I understand the sequence:
+
+  Is the flow:
+
+  A) brainstorm → write-plan → optionally /cc:research (to fill gaps found
+  in the plan) → review-plan → parse-plan → execute
+
+  B) brainstorm → optionally /cc:research (if you want external context
+  before planning) → write-plan → parse-plan → execute
+
+  C) brainstorm → write-plan (which might internally suggest "you should
+  research X before continuing") → user decides to /cc:research or skip →
+  parse-plan → execute
+
+  D) Something else - clarify the exact order?
+
+> the user runs brainstorm.  when brainstorm finishes it states, are you 
+ready to A)  write the plan or B) Research  if the user selects research a 
+slew of subagents research (max 4 subagents at once).  then after research 
+primary/main agent reviews and says i have new research and am ready to 
+write the plan. 
+
+● Ah, perfect! So:
+
+  1. /cc:brainstorm completes
+  2. Prompts: "Ready to A) write the plan or B) research?"
+  3. If B → spawns up to 4 research subagents in parallel
+  4. Main agent reviews findings → "I have new research, ready to write the
+  plan"
+  5. Proceeds to /cc:write-plan
+
+  Which research subagents should spawn, and should all 4 always run?
+
+  A) Always all 4 - Every research session spawns: serena-explorer,
+  context7-researcher, web-researcher, and one more (pattern-finder?
+  architecture-mapper?)
+
+  B) Task-dependent - Based on the brainstorm conversation, intelligently
+  choose which researchers to spawn (e.g., new feature → all 4, bug fix →
+  just serena-explorer, library integration → context7-researcher +
+  web-researcher)
+
+  C) User selects - After choosing "B) Research", show options: "Which areas
+   should I research? [Codebase / Library docs / Web best practices / All]"
+
+  D) Smart default with override - Automatically select relevant researchers
+   based on task, but let user add/remove before spawning
+
+> D 
+
+● Perfect! Smart selection with user override before spawning.
+
+  Now let's define the research subagent roster:
+
+  You mentioned up to 4 subagents in parallel. I'm thinking:
+  1. serena-explorer (uses Serena MCP for codebase exploration)
+  2. context7-researcher (uses Context7 MCP for library docs)
+  3. web-researcher (uses WebSearch/Tavily for best practices)
+  4. ???
+
+  What should the 4th research subagent be?
+
+  A) pattern-finder - Searches codebase for similar implementations to model
+   after (uses Serena's pattern searching)
+
+  B) architecture-mapper - Creates high-level architecture diagrams and
+  dependency maps (uses Serena + visualization)
+
+  C) github-researcher - Searches GitHub issues, PRs, discussions for
+  related work (uses WebSearch with site:github.com filters)
+
+  D) No 4th agent - Keep it to 3 core researchers (codebase, docs, web),
+  only spawn what's needed
+
+  E) Different idea - You have something else in mind?
+
+> C 
+
+● Excellent! So the 4 research subagents are:
+  1. serena-explorer - Codebase exploration (Serena MCP)
+  2. context7-researcher - Library docs (Context7 MCP)
+  3. web-researcher - Best practices (WebSearch/Tavily)
+  4. github-researcher - Community knowledge (GitHub issues/PRs/discussions)
+
+  Now let's talk about /cc:review-plan implementation:
+
+  Should plan review spawn subagents or run as a single agent?
+
+  A) Single agent review - One specialized agent runs the
+  completeness/quality/feasibility/scope checks and asks refinement
+  questions
+
+  B) Parallel validators - Spawn multiple subagents in parallel:
+  completeness-checker, quality-validator, feasibility-analyzer,
+  scope-creep-detector
+
+  C) Research-backed review - One reviewer that can optionally spawn
+  research subagents if it finds knowledge gaps (e.g., "This plan assumes X
+  works, let me verify with serena-explorer")
+
+  D) Hybrid - Single reviewer for initial checks, spawns specialized
+  validators only if major issues found
+
+> d 
+
+● Great! Efficient hybrid approach - single reviewer first, escalates to
+  specialized validators only when needed.
+
+  Now let's define /cc:pr workflow:
+
+  What should /cc:pr actually do?
+
+  A) Full automation - Run final checks (tests/lints/build) → commit all
+  changes → push to remote → create PR with auto-generated description
+
+  B) Verification + PR - Verify everything is committed and pushed →
+  generate PR description from plan/changes → create PR (assumes user
+  already committed/pushed)
+
+  C) Generate + prompt - Generate PR description → show preview → ask "Ready
+   to create PR?" → create if confirmed
+
+  D) Staged approach - Check git status → if uncommitted changes, offer to
+  commit → if not pushed, offer to push → generate description → create PR
+  with confirmations at each gate
+
+> PR is a dedicated command that just makes a high quality PR, makes sure 
+were on the right feature branch and pushes /creates the PR 
+
+● Perfect! /cc:pr is focused:
+  - Verify on feature branch (not main/master)
+  - Generate high-quality PR description from plan + changes
+  - Push branch
+  - Create PR
+
+  Now let me ask one final question before we move to design:
+
+  Are there any other important features, integrations, or considerations 
+  for this enhanced workflow that we haven't covered yet?
+
+  A) Covered everything - The workflow is complete, let's move to design
+
+  B) Error recovery - Need to discuss what happens when subagents fail,
+  research returns nothing, PR creation fails, etc.
+
+  C) Configuration - Should users be able to customize which research agents
+   run, prompts, approval gates, etc.?
+
+  D) Other ideas - You have additional features in mind
+
+> A 
+
+● Perfect! Let me start presenting the design in sections. I'll break it
+  down piece by piece and check with you after each section.
+
+  ---
+  Design: Enhanced CrispyClaude Workflow
+
+  Overview
+
+  We're enhancing CrispyClaude with a complete, opinionated workflow from
+  ideation to PR creation. The core enhancement is adding:
+
+  1. Research capabilities - MCP-powered subagents (Serena, Context7,
+  WebSearch, GitHub) that gather both internal codebase knowledge and
+  external best practices
+  2. Plan validation - Interactive review process that checks completeness,
+  quality, feasibility, and scope creep
+  3. State persistence - Save/resume functionality using Serena MCP memory
+  at any workflow stage
+  4. PR automation - Smart PR creation with auto-generated descriptions from
+   plans and execution context
+
+  The workflow becomes: brainstorm → (optional research) → write-plan → 
+  parse-plan → (optional review) → execute → save → pr
+
+  Users get two modes:
+  - Individual commands - Run each step independently for flexibility
+  - /cc:crispy orchestrator - Full automated workflow with approval gates
+
+  All execution defaults to parallel subagent execution (up to 2 concurrent
+  tasks), and state can be saved/resumed at any point using stage-specific
+  memory files (YYYY-MM-DD-<feature>-<stage>.md).
+
+  Does this high-level overview capture your vision correctly?
+
+> yes 
+
+● Great! Moving to the next section.
+
+  ---
+  New Commands & Skills
+
+  New Commands:
+  1. /cc:research - Spawns parallel research subagents (serena-explorer,
+  context7-researcher, web-researcher, github-researcher)
+  2. /cc:parse-plan - Decomposes plan into parallel task files (wraps
+  existing decomposing-plans skill)
+  3. /cc:review-plan - Interactive plan validation focused on completeness,
+  quality, feasibility, scope creep
+  4. /cc:save - Context-aware state persistence to Serena memory (works at
+  any workflow stage)
+  5. /cc:resume <path> - Loads saved state and continues from checkpoint
+  6. /cc:pr - Creates PR with auto-generated description (verifies branch,
+  pushes, creates PR)
+  7. /cc:crispy - Full workflow orchestrator with approval gates
+
+  New Skills:
+  1. using-serena-for-exploration - Best practices for Serena MCP codebase
+  analysis
+  2. using-context7-for-docs - Effective library documentation research
+  patterns
+  3. using-web-search - Web research strategies for best practices
+  4. using-github-search - GitHub issue/PR/discussion discovery techniques
+  5. research-orchestration - Manages parallel research subagents, synthesis
+   of findings
+  6. plan-review - Comprehensive plan validation with interactive refinement
+  7. state-persistence - Save/resume mechanics using Serena memory
+  8. pr-creation - Smart PR generation from context
+
+  Does this component breakdown make sense?
+
+> yes 
+
+● Excellent! Next section.
+
+  ---
+  Workflow Data Flow (/cc:crispy)
+
+  Step 1: Brainstorm
+  - Runs existing brainstorming skill
+  - At completion, prompts: "Ready to A) write the plan or B) research?"
+
+  Step 2: Research (Optional)
+  - If user selects B:
+    - Analyzes brainstorm context to suggest researchers: [✓] Codebase [✓] 
+  Library docs [✓] Web [ ] GitHub
+    - User can adjust selection
+    - Spawns up to 4 subagents in parallel (each using their specialized
+  skill)
+    - Main agent synthesizes findings: "I have new research and am ready to
+  write the plan"
+
+  Step 3: Write Plan
+  - Runs existing writing-plans skill
+  - Incorporates research findings if available
+  - Outputs plan to docs/plans/YYYY-MM-DD-<feature>.md
+
+  Step 4: Parse Plan
+  - Runs existing decomposing-plans skill
+  - Creates task files in docs/plans/tasks/YYYY-MM-DD-<feature>/
+  - Generates manifest with parallel batches
+  - Prompts: "Ready to A) review the plan or B) execute immediately?"
+
+  Step 5: Review Plan (Optional)
+  - If user selects A:
+    - Single reviewer checks completeness, quality, feasibility, scope creep
+    - If major issues found, spawns specialized validators
+    - Interactive refinement until approved
+    - Updates plan if changes made
+
+  Does this flow through the first half of the workflow look right?
+
+> yes 
+
+● Perfect! Continuing with the second half.
+
+  ---
+  Workflow Data Flow - Execution & Completion
+
+  Step 6: Execute Plan
+  - Runs parallel-subagent-driven-development skill (always the default)
+  - Executes tasks in parallel batches (up to 2 concurrent subagents)
+  - Code review gate after each batch
+  - Handles failures with existing resilience mechanisms
+
+  Step 7: Save Memory
+  - Runs automatically at completion with stage=complete
+  - Captures: implementation learnings, patterns discovered, gotchas,
+  decisions made
+  - Saves to Serena memory: YYYY-MM-DD-<feature>-complete.md
+  - Can also be run manually at ANY point via /cc:save
+
+  Step 8: Create PR
+  - Runs pr-creation skill
+  - Verifies on feature branch (not main/master)
+  - Generates PR description from:
+    - Original plan (docs/plans/YYYY-MM-DD-<feature>.md)
+    - Execution context (completed tasks, changes made)
+    - Memory/learnings captured
+  - Pushes branch to remote
+  - Creates PR with auto-generated description
+
+  Throughout workflow:
+  - User can run /cc:save at any point (research, planning, execution
+  stages)
+  - Creates stage-specific memory:
+  YYYY-MM-DD-<feature>-{research|planning|execution|complete}.md
+  - Later run /cc:resume path/to/memory.md to continue from that point
+
+  Does this complete workflow make sense?
+
+> yes 
+
+● Great! Let me dive into implementation details.
+
+  ---
+  Research Subagent Architecture
+
+  Each research subagent is:
+  - A specialized agent type (defined in agent metadata with frontmatter)
+  - Backed by a skill that encodes MCP usage best practices
+  - Focused on a specific knowledge domain
+
+  1. serena-explorer
+  - Skill: using-serena-for-exploration
+  - Tools: Serena MCP (find_symbol, search_for_pattern,
+  get_symbols_overview, etc.)
+  - Purpose: Understand current codebase architecture, find similar
+  implementations, trace dependencies
+  - Output: File paths with line numbers, architectural patterns,
+  integration points
+
+  2. context7-researcher
+  - Skill: using-context7-for-docs
+  - Tools: Context7 MCP (resolve-library-id, get-library-docs)
+  - Purpose: Official library documentation, framework best practices,
+  version-specific patterns
+  - Output: API usage examples, official patterns, migration guides
+
+  3. web-researcher
+  - Skill: using-web-search
+  - Tools: WebSearch, WebFetch
+  - Purpose: Best practices, tutorials, recent articles, expert opinions
+  - Output: Curated articles with quotes, publication dates, authority
+  assessment
+
+  4. github-researcher
+  - Skill: using-github-search
+  - Tools: WebSearch (with site:github.com), WebFetch
+  - Purpose: Related issues, PRs, discussions, community solutions
+  - Output: Relevant GitHub links, problem-solution patterns, common gotchas
+
+  Does this subagent structure look right?
+
+> yes 
+
+● Perfect! Now let's cover state persistence.
+
+  ---
+  Save/Resume Mechanism
+
+  Memory File Format: YYYY-MM-DD-<feature-name>-<stage>.md
+
+  Stage-Specific Content:
+
+  -research.md (saved after research completes or manually during research):
+  # Research: <feature-name>
+
+  ## Brainstorm Summary
+  [Key decisions from brainstorm session]
+
+  ## Codebase Findings (serena-explorer)
+  - Current architecture: [file:line references]
+  - Similar implementations: [patterns found]
+  - Integration points: [where to hook in]
+
+  ## Library Documentation (context7-researcher)
+  - Relevant APIs: [official patterns]
+  - Best practices: [framework recommendations]
+
+  ## Web Research (web-researcher)
+  - Best practices: [articles, quotes, dates]
+  - Expert opinions: [sources]
+
+  ## GitHub Research (github-researcher)
+  - Related issues: [links, solutions]
+  - Common gotchas: [community learnings]
+
+  ## Next Steps
+  Ready to write plan with research context
+
+  -planning.md (saved during plan writing):
+  # Planning: <feature-name>
+
+  ## Design Decisions
+  - Approach chosen: [with rationale]
+  - Alternatives considered: [trade-offs]
+
+  ## Plan Draft
+  [Current plan state or link to plan file]
+
+  ## Open Questions
+  [Unresolved items]
+
+  ## Next Steps
+  [Parse plan / Continue planning]
+
+  Does this memory structure capture the right information?
+
+> yes 
+  ⎿  Interrupted · What should Claude do instead?
+
+> and definitely save the research to memory once complete 
+
+● Absolutely! Research automatically saves to memory when complete. Let me
+  show the execution and completion memory formats.
+
+  ---
+  Save/Resume Mechanism - Execution & Completion
+
+  -execution.md (saved during execution or when pausing mid-execution):
+  # Execution: <feature-name>
+
+  ## Plan Reference
+  Link to: docs/plans/YYYY-MM-DD-<feature>.md
+  Tasks directory: docs/plans/tasks/YYYY-MM-DD-<feature>/
+
+  ## Progress Summary
+  - Total tasks: X
+  - Completed: Y
+  - In progress: Z
+  - Remaining: N
+
+  ## Completed Tasks
+  - [Task 1]: ✓ Done - [summary of changes]
+  - [Task 2]: ✓ Done - [summary of changes]
+
+  ## Current Task
+  - [Task N]: In progress - [current state, blockers]
+
+  ## Blockers/Issues
+  [Any problems encountered]
+
+  ## Next Steps
+  Continue execution from task N
+
+  -complete.md (saved automatically at workflow completion):
+  # Implementation Complete: <feature-name>
+
+  ## What Was Built
+  [Summary of implementation]
+
+  ## Key Learnings
+  - Pattern discovered: [what worked well]
+  - Gotcha encountered: [what to watch for]
+  - Trade-off made: [decision and reasoning]
+
+  ## Codebase Updates
+  - Files modified: [major changes with file:line]
+  - New patterns introduced: [for future reference]
+  - Integration points: [where system connects]
+
+  ## For Next Time
+  - What worked: [approaches to reuse]
+  - What didn't: [avoid in future]
+  - Suggestions: [improvements for similar tasks]
+
+  ## PR Created
+  Link to PR: [URL]
+
+  Does this complete the memory system?
+
+> yes always include ## Step 1: Gather Metadata
+
+Collect session metadata to include in checkpoint document:
+
+```bash
+# Current git commit
+git rev-parse HEAD
+
+# Current branch
+git branch --show-current
+
+# Current date/time with timezone
+date -Iseconds
+
+# Repository name
+
+**Template structure:**
+
+```markdown
+---
+date: [Current date and time with timezone in ISO 8601 format]
+git_commit: [Current commit hash]
+branch: [Current branch name]
+repository: idm-full-stack
+topic: "[Feature/Task Name] Checkpoint"
+tags: [checkpoint, component-names, feature-areas]
+status: [in-progress|complete|blocked]
+last_updated: [YYYY-MM-DD]
+type: <stage>
+--- 
+
+● Perfect addition! Memory files include structured metadata. Let me show
+  the complete format with frontmatter.
+
+  ---
+  Memory File Format with Metadata
+
+  Complete structure:
+
+  ---
+  date: 2025-11-19T14:23:45-08:00
+  git_commit: a1b2c3d4e5f6
+  branch: feature/user-authentication
+  repository: crispy-claude
+  topic: "User Authentication Checkpoint"
+  tags: [checkpoint, authentication, user-management, research]
+  status: complete
+  last_updated: 2025-11-19
+  type: research
+  ---
+
+  # Research: user-authentication
+
+  ## Brainstorm Summary
+  [Key decisions from brainstorm session]
+
+  ## Codebase Findings (serena-explorer)
+  ...
+
+  /cc:resume behavior:
+
+  1. Parse metadata - Extract status, type, branch info
+  2. Restore context - Load all content into conversation
+  3. Analyze progress - Based on type and status, determine what's done vs.
+  remaining
+  4. Present assessment:
+  Loaded: user-authentication-execution.md
+  Status: in-progress (3/5 tasks complete)
+  Branch: feature/user-authentication
+  Last updated: 2025-11-19
+
+  Next step in crispy workflow: Continue execution
+
+  Continue with execution? (Y/n/other)
+  5. Flexible continuation - User can continue crispy workflow or run
+  different command
+
+  Does this memory format and resume behavior work?
+
+> yes 
+
+● Excellent! Now let's detail PR creation.
+
+  ---
+  PR Creation (/cc:pr)
+
+  Pre-flight Checks:
+  1. Verify on feature branch (error if on main/master)
+  2. Check for uncommitted changes (warn if found, offer to commit)
+  3. Verify remote tracking exists (set up if needed)
+
+  PR Description Generation:
+
+  Auto-generates from multiple sources:
+
+  ## Summary
+  [Extracted from plan's Overview section]
+
+  ## Implementation Details
+  [Synthesized from plan phases and execution memory]
+
+  ### What Changed
+  - [Key changes from git diff --stat]
+  - [Major files modified with purpose]
+
+  ### Approach
+  [From plan's "Implementation Approach" section]
+
+  ## Testing
+  [From plan's "Testing Strategy" + execution verification results]
+
+  - ✅ All unit tests passing
+  - ✅ Integration tests passing
+  - ✅ Manual verification completed
+
+  ## Key Learnings
+  [From complete.md memory if available]
+  - [Patterns discovered]
+  - [Gotchas encountered]
+
+  ## References
+  - Implementation plan: docs/plans/YYYY-MM-DD-<feature>.md
+  - Tasks completed: docs/plans/tasks/YYYY-MM-DD-<feature>/
+
+  ---
+  🔥 Generated with
+  [CrispyClaude](https://github.com/seanGSISG/crispy-claude)
+
+  Execution:
+  1. Push branch to remote
+  2. Create PR using gh pr create with generated description
+  3. Output PR URL
+  4. Optionally save PR URL to complete.md memory
+
+  Does this PR generation approach work?
+
+> yes 
+
+● Perfect! Now let's detail the plan review process.
+
+  ---
+  Plan Review (/cc:review-plan)
+
+  Phase 1: Initial Assessment (Single Reviewer)
+
+  Runs automatic checks across 4 dimensions:
+
+  Completeness Check:
+  - All phases have clear success criteria (automated + manual)
+  - Dependencies between phases identified
+  - Rollback/migration strategy present
+  - Edge cases addressed
+  - Test strategy defined
+
+  Quality Check:
+  - Success criteria are measurable
+  - File paths and line numbers included
+  - Commands use make where possible
+  - Language is clear and actionable
+  - Code examples are specific
+
+  Feasibility Check:
+  - Prerequisites exist in codebase
+  - Assumptions validated against research
+  - No obvious technical blockers
+  - Reasonable scope for time estimate
+
+  Scope Creep Check:
+  - Compare against original brainstorm decisions
+  - Check "What We're NOT Doing" section exists
+  - Flag features not in original scope
+  - Identify gold-plating or over-engineering
+
+  Scoring: Each dimension gets a score (pass/warn/fail)
+
+  Does this initial assessment cover the right areas?
+
+> yes 
+
+● Excellent! Continuing with the review phases.
+
+  ---
+  Plan Review - Escalation & Refinement
+
+  Phase 2: Escalation (If Needed)
+
+  If any dimension scores "fail", spawn specialized validators:
+
+  - completeness-checker - Deep dive on missing phases, success criteria
+  gaps, edge cases
+  - feasibility-analyzer - Spawns serena-explorer to verify assumptions
+  against actual codebase
+  - scope-creep-detector - Compares plan against research.md and original
+  brainstorm context
+  - quality-validator - Checks for vague language, missing references,
+  untestable criteria
+
+  Validators run in parallel, return detailed findings.
+
+  Phase 3: Interactive Refinement
+
+  Present findings conversationally (like brainstorming):
+
+  I've reviewed the plan and found some areas to improve:
+
+  **Completeness (⚠️ Warning):**
+  - Phase 2 success criteria don't include database migration verification
+  - No rollback strategy if Phase 3 fails
+
+  **Scope Creep (❌ Issue):**
+  - Plan includes "admin dashboard" but brainstorm only mentioned "user
+  dashboard"
+  - This looks like scope expansion
+
+  **Quality (✅ Pass)**
+  **Feasibility (✅ Pass)**
+
+  Let's address these issues. Starting with scope:
+
+  Q1: Should we remove the admin dashboard feature, or was this intentional
+  expansion?
+     A) Remove it (stick to original scope)
+     B) Keep it (intentional addition)
+     C) Split into separate plan
+
+  One question at a time, refine until all dimensions pass.
+
+  Update plan with agreed changes, re-run assessment, iterate until
+  approved.
+
+  Does this review process work?
+
+> yes 
+
+● Great! Now let's cover updates to existing skills.
+
+  ---
+  Updates to Existing Skills
+
+  1. brainstorming/SKILL.md
+
+  Add at the end of "After the Design" section:
+
+  **Next Steps:**
+  - Ask: "Ready to A) write the plan or B) research first?"
+  - If A: Proceed to writing-plans skill
+  - If B: Trigger research-orchestration skill:
+    - Analyze brainstorm context
+    - Suggest researchers: `[✓] Codebase [✓] Library docs [ ] Web [✓]
+  GitHub`
+    - Allow user to adjust selection
+    - Spawn selected subagents (max 4 in parallel)
+    - Synthesize findings
+    - Report: "I have new research and am ready to write the plan"
+    - Proceed to writing-plans skill
+
+  2. executing-plans/SKILL.md
+
+  Update to always use parallel execution:
+
+  ## Execution Strategy
+
+  This skill ALWAYS uses `parallel-subagent-driven-development` for
+  execution.
+
+  When invoked:
+  1. Load the plan manifest from
+  `docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json`
+  2. Invoke parallel-subagent-driven-development with the manifest
+  3. Execute tasks in parallel batches (up to 2 concurrent subagents)
+  4. Code review gate after each batch
+  5. Continue until all tasks complete
+
+  Note: The sequential execution mode is deprecated. All plans execute with
+  parallelization.
+
+  3. decomposing-plans/SKILL.md
+
+  Add prompt at the end:
+
+  After decomposition completes, prompt user:
+
+  "Plan decomposed into X tasks across Y parallel batches.
+  Ready to A) review the plan or B) execute immediately?"
+
+  Do these updates make sense?
+
+> yes 
+
+● Perfect! Now let's show the complete file structure.
+
+  ---
+  File Structure
+
+  .claude/
+  ├── commands/
+  │   ├── brainstorm.md (existing)
+  │   ├── write-plan.md (existing)
+  │   ├── execute-plan.md (existing)
+  │   ├── research.md (NEW)
+  │   ├── parse-plan.md (NEW)
+  │   ├── review-plan.md (NEW)
+  │   ├── save.md (NEW)
+  │   ├── resume.md (NEW)
+  │   ├── pr.md (NEW)
+  │   └── crispy.md (NEW - orchestrator)
+  │
+  ├── skills/
+  │   ├── brainstorming/SKILL.md (UPDATED - add research prompt)
+  │   ├── writing-plans/SKILL.md (existing)
+  │   ├── decomposing-plans/SKILL.md (UPDATED - add review prompt)
+  │   ├── executing-plans/SKILL.md (UPDATED - always use parallel)
+  │   ├── parallel-subagent-driven-development/SKILL.md (existing)
+  │   │
+  │   ├── research-orchestration/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── plan-review/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── state-persistence/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── pr-creation/ (NEW)
+  │   │   └── SKILL.md
+  │   │
+  │   ├── using-serena-for-exploration/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── using-context7-for-docs/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── using-web-search/ (NEW)
+  │   │   └── SKILL.md
+  │   └── using-github-search/ (NEW)
+  │       └── SKILL.md
+  │
+  └── agents/ (NEW directory)
+      ├── serena-explorer.md
+      ├── context7-researcher.md
+      ├── web-researcher.md
+      ├── github-researcher.md
+      ├── completeness-checker.md
+      ├── feasibility-analyzer.md
+      ├── scope-creep-detector.md
+      └── quality-validator.md
+
+  Does this structure make sense? Should agents live in .claude/agents/ or 
+  somewhere else?
+
+> these should all be added/updated  to cc/ i.e cc/commands etc 
+
+● Absolutely right! Everything goes in the cc/ plugin directory:
+
+  ---
+  File Structure (Corrected)
+
+  cc/
+  ├── commands/
+  │   ├── brainstorm.md (existing)
+  │   ├── write-plan.md (existing)
+  │   ├── execute-plan.md (existing)
+  │   ├── research.md (NEW)
+  │   ├── parse-plan.md (NEW)
+  │   ├── review-plan.md (NEW)
+  │   ├── save.md (NEW)
+  │   ├── resume.md (NEW)
+  │   ├── pr.md (NEW)
+  │   └── crispy.md (NEW - orchestrator)
+  │
+  ├── skills/
+  │   ├── brainstorming/SKILL.md (UPDATED - add research prompt)
+  │   ├── writing-plans/SKILL.md (existing)
+  │   ├── decomposing-plans/SKILL.md (UPDATED - add review prompt)
+  │   ├── executing-plans/SKILL.md (UPDATED - always use parallel)
+  │   ├── parallel-subagent-driven-development/SKILL.md (existing)
+  │   │
+  │   ├── research-orchestration/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── plan-review/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── state-persistence/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── pr-creation/ (NEW)
+  │   │   └── SKILL.md
+  │   │
+  │   ├── using-serena-for-exploration/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── using-context7-for-docs/ (NEW)
+  │   │   └── SKILL.md
+  │   ├── using-web-search/ (NEW)
+  │   │   └── SKILL.md
+  │   └── using-github-search/ (NEW)
+  │       └── SKILL.md
+  │
+  └── agents/ (NEW directory)
+      ├── serena-explorer.md
+      ├── context7-researcher.md
+      ├── web-researcher.md
+      ├── github-researcher.md
+      ├── completeness-checker.md
+      ├── feasibility-analyzer.md
+      ├── scope-creep-detector.md
+      └── quality-validator.md
+
+  Better?
+
+> yes 
+
+● Perfect! Let me present the final section on the orchestrator.
+
+  ---
+  /cc:crispy Orchestrator Implementation
+
+  Command file: cc/commands/crispy.md
+
+  Flow:
+
+  You are running the complete CrispyClaude workflow from ideation to PR.
+
+  ## Step 1: Brainstorm
+  Invoke the brainstorming skill.
+
+  At completion, prompt:
+  "Ready to A) write the plan or B) research first?"
+
+  ## Step 2: Research (Optional)
+  If user selects B:
+  - Invoke research-orchestration skill
+  - Skill handles subagent spawning and synthesis
+  - Automatically saves to YYYY-MM-DD-<feature>-research.md
+
+  ## Step 3: Write Plan
+  Invoke writing-plans skill (incorporates research if available)
+
+  ## Step 4: Parse Plan
+  Invoke decomposing-plans skill
+
+  At completion, prompt:
+  "Ready to A) review the plan or B) execute immediately?"
+
+  ## Step 5: Review Plan (Optional)
+  If user selects A:
+  - Invoke plan-review skill
+  - Interactive refinement until approved
+
+  ## Step 6: Execute
+  Invoke parallel-subagent-driven-development skill
+  Execution handles its own batch review gates
+
+  ## Step 7: Save Memory
+  Invoke state-persistence skill with type=complete
+  Automatically saves to YYYY-MM-DD-<feature>-complete.md
+
+  ## Step 8: Create PR
+  Invoke pr-creation skill
+  Outputs PR URL and completes workflow
+
+  Throughout: User can exit and run /cc:save at any point
+
+  Approval gates: At steps 2, 5 - user chooses A or B
+  Automatic saves: After research (step 2) and completion (step 7)
+  Manual save: User can run /cc:save anytime to pause
+
+  Does this orchestrator flow capture everything correctly?
+
+> yes now write plan 
+
+● Perfect! Let me write the complete design document, then we'll move to
+  implementation planning.
+
+● Write(docs/plans/2025-11-19-enhanced-crispy-workflow-design.md)
+  ⎿  Wrote 577 lines to                                                    
+     docs/plans/2025-11-19-enhanced-crispy-workflow-design.md
+     # Enhanced CrispyClaude Workflow Design
+     **Date:** 2025-11-19
+     **Status:** Approved
+     **Type:** Feature Enhancement
+     ## Overview
+     Enhance CrispyClaude with a complete, opinionated workflow from
+     ideation to PR creation. The core enhancement adds:
+     … +567 lines (ctrl+o to expand)
+
+● Excellent! Design document written. Let me commit it to git.
+
+● Bash(git add docs/plans/2025-11-19-enhanced-crispy-workflow-design.md && git
+      commit -m "Add enhanced CrispyClaude workflow design…)
+  ⎿  [main 601758a] Add enhanced CrispyClaude workflow design            
+      Author: Sean Swanson <113628614+seanGSISG@users.noreply.github.com>
+      1 file changed, 576 insertions(+)
+     … +2 lines (ctrl+o to expand)
+
+● Perfect! The design is documented and committed.
+
+  Design document: docs/plans/2025-11-19-enhanced-crispy-workflow-design.md
+
+  ---
+  Ready to set up for implementation?
+
+  I can:
+  1. Create a git worktree for isolated development
+  2. Write a detailed implementation plan breaking this into phases
+
+  Would you like to proceed?
+
+> 2 
+
+● Perfect! Let me create a detailed implementation plan.
+
+> The "writing-plans" skill is running 
+
+> /context 
+  ⎿ Error: 400 {"type":"error","error":{"type":"invalid_request_error","message"
+    :"messages.97.content.0.type: Expected `thinking` or `redacted_thinking`, 
+    but found `text`. When `thinking` is enabled, a final `assistant` message 
+    must start with a thinking block. We recommend you include thinking blocks 
+    from previous turns. To avoid this requirement, disable `thinking`. Please 
+    consult our documentation at https://docs.claude.com/en/docs/build-with-clau
+    de/extended-thinking"},"request_id":"req_011CVJCTXMs2UEtbJoGj6hjp"}
+
+> /exit 
+  ⎿  Goodbye!
+
+
+

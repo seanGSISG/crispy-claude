@@ -21,6 +21,76 @@ Users get two modes:
 
 All execution defaults to parallel subagent execution (up to 2 concurrent tasks), and state can be saved/resumed at any point using stage-specific memory files (`YYYY-MM-DD-<feature>-<stage>.md`).
 
+## Command & Skill Structure
+
+Commands follow this pattern:
+- File: `cc/commands/cc/<name>.md`
+- Usage: `/cc:<name>`
+- Example: `cc/commands/cc/save.md` → `/cc:save`
+
+Skills are referenced by name only:
+- File: `cc/skills/<skill-name>/SKILL.md`
+- Reference: "Use the <skill-name> skill"
+- Example: "Use the parallel-subagent-driven-development skill"
+  refers to `cc/skills/parallel-subagent-driven-development/SKILL.md`
+
+Key: Commands are slash commands for users. Skills are instructions for Claude.
+
+## Execution Flow Decision Tree
+
+After writing a plan, execution approach depends on whether you decompose.
+
+### Path 1: With Decomposition (Recommended for 4+ tasks)
+
+**When**: Plans with 4+ tasks, parallelizable work, need speed
+
+**Flow**:
+1. `/cc:write-plan` → `docs/plans/YYYY-MM-DD-<feature>.md`
+2. `/cc:parse-plan` → Task files + `manifest.json`
+3. Optional: `/cc:review-plan`
+4. Execute with `cc/skills/parallel-subagent-driven-development/SKILL.md`
+
+**Requirements**:
+- Must have `manifest.json` from decomposition
+- Task files in `docs/plans/tasks/YYYY-MM-DD-<feature>/`
+
+**Benefits**:
+- Up to 2 tasks in parallel per batch
+- ~40% faster for parallelizable plans
+- 90% context reduction per task
+
+### Path 2: Without Decomposition (For simple 1-3 task plans)
+
+**When**: Simple plans, sequential work, prefer simplicity
+
+**Flow**:
+1. `/cc:write-plan` → `docs/plans/YYYY-MM-DD-<feature>.md`
+2. Skip `/cc:parse-plan`
+3. Execute with `cc/skills/subagent-driven-development/SKILL.md`
+
+**Requirements**:
+- Just the monolithic plan file
+
+**Benefits**:
+- Simpler flow, no decomposition overhead
+- Works for small sequential plans
+
+### CRITICAL Constraint
+
+⚠️ You CANNOT use parallel-subagent-driven-development without decomposition.
+
+If manifest.json does not exist → MUST use subagent-driven-development
+
+### Recommendation
+
+Always decompose for plans with 4+ tasks to enable parallel execution.
+
+### /cc:crispy Behavior
+
+The `/cc:crispy` orchestrator ALWAYS decomposes (Step 4), enabling parallel execution.
+
+Individual command users can skip decomposition for simple plans.
+
 ## New Commands & Skills
 
 ### New Commands
@@ -107,6 +177,50 @@ Each research subagent is:
 - Backed by a skill that encodes MCP usage best practices
 - Focused on a specific knowledge domain
 
+### Research Subagent Selection Algorithm
+
+When user chooses "B) research", intelligently select researchers.
+
+#### Default Selection
+
+**serena-explorer** [✓ ALWAYS]
+- Always need codebase understanding
+
+**context7-researcher** [✓ if library mentioned]
+- Select if: new library, framework, official docs needed
+- Keywords: "using React", "integrate X", "best practices"
+
+**web-researcher** [✓ if patterns mentioned]
+- Select if: best practices, tutorials, modern approaches
+- Keywords: "industry standard", "common pattern", "how to"
+
+**github-researcher** [☐ usually OFF]
+- Select if: known issues, community solutions, similar features
+- Keywords: "GitHub issue", "others solved", "similar to X"
+
+#### User Presentation
+
+```
+Based on brainstorm, I recommend:
+
+[✓] Codebase (serena-explorer)
+[✓] Library docs (context7-researcher) - React patterns
+[✓] Web (web-researcher) - Auth best practices
+[ ] GitHub (github-researcher)
+
+Adjust? (Y/n)
+```
+
+If Y: Let user toggle with letters (C/L/W/G)
+If n: Use defaults
+
+#### Spawning
+
+- Up to 4 in parallel
+- Each uses specialized skill
+- Synthesize after all complete
+- Auto-save to research.md
+
 ### 1. serena-explorer
 - **Skill:** `using-serena-for-exploration`
 - **Tools:** Serena MCP (find_symbol, search_for_pattern, get_symbols_overview, etc.)
@@ -131,7 +245,123 @@ Each research subagent is:
 - **Purpose:** Related issues, PRs, discussions, community solutions
 - **Output:** Relevant GitHub links, problem-solution patterns, common gotchas
 
+### Agent File Format
+
+Research agents are defined in `cc/agents/*.md` with frontmatter metadata.
+
+#### Frontmatter Structure
+
+```yaml
+---
+name: serena-explorer
+description: Codebase exploration specialist using Serena MCP
+tools: [Serena MCP]
+skill: using-serena-for-exploration
+model: sonnet
+---
+```
+
+**Fields**:
+- `name` - Agent identifier (matches filename)
+- `description` - What the agent does (1-2 sentences)
+- `tools` - List of MCP servers or tool categories used
+- `skill` - Reference to skill file that defines behavior
+- `model` - Claude model to use (sonnet/opus/haiku)
+
+#### Complete Example: serena-explorer.md
+
+```markdown
+---
+name: serena-explorer
+description: Codebase exploration specialist using Serena MCP for architectural understanding and pattern discovery
+tools: [Serena MCP]
+skill: using-serena-for-exploration
+model: sonnet
+---
+
+# Serena Explorer Agent
+
+You are a codebase exploration specialist. Use Serena MCP tools to understand architecture, find similar implementations, and trace dependencies.
+
+Follow the `using-serena-for-exploration` skill for best practices on:
+- Using find_symbol for targeted code discovery
+- Using search_for_pattern for broader searches
+- Using get_symbols_overview for file structure understanding
+- Providing file:line references in all findings
+
+Report findings with:
+- File paths and line numbers
+- Architectural patterns discovered
+- Integration points identified
+- Relevant code snippets with context
+```
+
+#### Other Agent Files Needed
+
+- `context7-researcher.md` - Library documentation specialist
+- `web-researcher.md` - Web search and best practices specialist
+- `github-researcher.md` - GitHub issues/PRs/discussions specialist
+- `completeness-checker.md` - Plan completeness validator (for plan-review)
+- `feasibility-analyzer.md` - Plan feasibility checker (for plan-review)
+- `scope-creep-detector.md` - Scope validation specialist (for plan-review)
+- `quality-validator.md` - Plan quality checker (for plan-review)
+
+### How to Invoke Research Agents
+
+Research agents are spawned using the Task tool with agent reference:
+
+```typescript
+// From research-orchestration skill
+await Task({
+  subagent_type: "serena-explorer",
+  description: "Explore codebase for auth patterns",
+  prompt: `
+    Analyze the current authentication implementation.
+
+    Find:
+    - Existing auth files and their structure
+    - Similar authentication patterns in codebase
+    - Integration points for new auth features
+
+    Provide file:line references for all findings.
+  `
+})
+```
+
+**Key points**:
+- `subagent_type` matches agent name from frontmatter
+- `description` is short summary (3-5 words)
+- `prompt` includes specific research objectives
+- Agent automatically uses its configured skill and tools
+- Results returned to main agent for synthesis
+
 ## State Persistence (Save/Resume)
+
+### Automatic vs Manual Saves
+
+The workflow includes both automatic and manual save points:
+
+**Automatic Saves** (no user action required):
+- **After research completes** - Saves to `YYYY-MM-DD-<feature>-research.md`
+  - Triggered when all research subagents finish
+  - Includes brainstorm summary, codebase findings, library docs, web research
+  - Happens automatically before proceeding to write-plan
+
+- **After workflow completion** - Saves to `YYYY-MM-DD-<feature>-complete.md`
+  - Triggered when execution finishes
+  - Includes implementation learnings, patterns discovered, gotchas, decisions
+  - Happens automatically before PR creation
+
+**Manual Saves** (user runs `/cc:save`):
+- **During planning** - Saves to `YYYY-MM-DD-<feature>-planning.md`
+  - User can save while drafting plan
+  - Captures design decisions, alternatives considered, open questions
+
+- **During execution** - Saves to `YYYY-MM-DD-<feature>-execution.md`
+  - User can pause execution at any point
+  - Captures progress summary, completed tasks, current task state, blockers
+
+**Key principle**: Automatic saves happen at natural workflow boundaries (research → planning, execution → PR). Manual saves provide pause points within planning or execution stages.
 
 ### Memory File Format
 
@@ -159,6 +389,68 @@ status: [in-progress|complete|blocked]
 last_updated: [YYYY-MM-DD]
 type: [research|planning|execution|complete]
 ---
+```
+
+### /cc:save Stage Detection Algorithm
+
+When `/cc:save` runs, detect current workflow stage to create correct memory file.
+
+#### Detection Rules
+
+**Research stage** if:
+- ✅ Brainstorm completed
+- ✅ Research subagents reported back
+- ❌ No plan file in `docs/plans/`
+- **Save as**: `YYYY-MM-DD-<feature>-research.md`
+
+**Planning stage** if:
+- ✅ Plan file exists: `docs/plans/YYYY-MM-DD-<feature>.md`
+- ❌ No manifest.json
+- ❌ No tasks in TodoWrite
+- **Save as**: `YYYY-MM-DD-<feature>-planning.md`
+
+**Execution stage** if:
+- ✅ Plan exists AND (manifest.json OR TodoWrite has tasks)
+- ✅ Uncommitted changes (work in progress)
+- ❌ Not all tasks complete
+- **Save as**: `YYYY-MM-DD-<feature>-execution.md`
+
+**Complete stage** if:
+- ✅ All tasks complete in TodoWrite
+- ✅ Execution finished
+- **Save as**: `YYYY-MM-DD-<feature>-complete.md`
+
+#### Feature Name Extraction
+
+- From plan filename if exists
+- From brainstorm topic if early stage
+- Ask user if ambiguous
+
+#### Metadata Collection
+
+```bash
+git rev-parse HEAD           # commit hash
+git branch --show-current    # branch name
+date -Iseconds              # timestamp
+```
+
+#### Ambiguity Handling
+
+If unclear, ask: "Save as: A) research B) planning C) execution D) complete?"
+
+#### Example
+
+```
+User: /cc:save
+
+Checks:
+- ✅ Plan: docs/plans/2025-11-20-user-auth.md
+- ❌ No manifest.json
+- ❌ No TodoWrite tasks
+- ❌ No uncommitted changes
+
+→ Detected: planning stage
+→ Save: 2025-11-20-user-auth-planning.md
 ```
 
 ### Stage-Specific Content
@@ -282,6 +574,82 @@ When running `/cc:resume path/to/YYYY-MM-DD-<feature>-<stage>.md`:
    Continue with execution? (Y/n/other)
    ```
 5. **Flexible continuation** - User can continue crispy workflow or run different command
+
+### Stage-Specific Resume Options
+
+What gets presented depends on the memory file type:
+
+**Resuming from -research.md**:
+```
+Loaded: user-auth-research.md
+Status: complete
+
+Research findings:
+- Codebase: [summary of serena findings]
+- Library docs: [summary of context7 findings]
+- Web: [summary of web research]
+
+Next step in crispy workflow: Write plan
+
+Options:
+A) Write plan with research context
+B) Re-run specific research subagent
+C) Do additional research
+D) Skip to different workflow step
+```
+
+**Resuming from -planning.md**:
+```
+Loaded: user-auth-planning.md
+Status: in-progress
+
+Plan draft status: [summary of what's written]
+Open questions: [list any unresolved items]
+
+Next step in crispy workflow: Complete plan
+
+Options:
+A) Continue writing plan
+B) Review draft with plan-review
+C) Start over with new brainstorm
+D) Skip to different workflow step
+```
+
+**Resuming from -execution.md**:
+```
+Loaded: user-auth-execution.md
+Status: in-progress (3/5 tasks complete)
+Branch: feature/user-auth
+
+Completed: Task 1, Task 2, Task 3
+In progress: Task 4
+Remaining: Task 5
+
+Next step in crispy workflow: Continue execution
+
+Options:
+A) Continue execution from Task 4
+B) Review completed work
+C) Adjust remaining tasks
+D) Skip to different workflow step
+```
+
+**Resuming from -complete.md**:
+```
+Loaded: user-auth-complete.md
+Status: complete
+
+Implementation complete. All tasks finished.
+Branch: feature/user-auth
+
+Next step in crispy workflow: Create PR
+
+Options:
+A) Create PR
+B) Make additional changes
+C) Review implementation
+D) Skip to different workflow step
+```
 
 ## Plan Review Process
 
@@ -435,16 +803,29 @@ Update to always use parallel execution:
 ```markdown
 ## Execution Strategy
 
-This skill ALWAYS uses `parallel-subagent-driven-development` for execution.
+This skill checks for decomposition and chooses execution method:
 
-When invoked:
+If manifest.json exists:
+  → Use parallel-subagent-driven-development
+
+If manifest.json does NOT exist:
+  → Use subagent-driven-development
+
+Detection: Check for manifest.json file before choosing execution.
+
+**If parallel execution (manifest exists)**:
 1. Load the plan manifest from `docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json`
 2. Invoke parallel-subagent-driven-development with the manifest
 3. Execute tasks in parallel batches (up to 2 concurrent subagents)
 4. Code review gate after each batch
 5. Continue until all tasks complete
 
-Note: The sequential execution mode is deprecated. All plans execute with parallelization.
+**If sequential execution (no manifest)**:
+1. Load the monolithic plan from `docs/plans/YYYY-MM-DD-<feature>.md`
+2. Invoke subagent-driven-development
+3. Execute tasks sequentially
+4. Code review gate after each task
+5. Continue until all tasks complete
 ```
 
 ### 3. `decomposing-plans/SKILL.md`
@@ -455,8 +836,107 @@ Add prompt at the end:
 After decomposition completes, prompt user:
 
 "Plan decomposed into X tasks across Y parallel batches.
-Ready to A) review the plan or B) execute immediately?"
+
+Options:
+A) Review the plan with plan-review
+B) Execute immediately with parallel-subagent-driven-development
+C) Save execution state to memory for later (save and exit)
+
+Choose option (A/B/C):"
+
+If user chooses:
+- A: Proceed to plan-review skill
+- B: Proceed directly to parallel-subagent-driven-development
+- C: Use state-persistence skill to save execution.md memory with:
+  - Plan reference and task manifest location
+  - Current status (ready to execute, 0 tasks complete)
+  - Recommendation to resume with `/cc:resume` and execute
+  - Exit workflow after save completes
 ```
+
+### 4. `writing-plans/SKILL.md`
+
+Add guidance on execution options:
+
+```markdown
+## After Plan Completion
+
+Present execution options to user:
+
+**Recommended next step**: `/cc:parse-plan`
+
+This decomposes the plan into parallel task files, enabling:
+- Up to 2 tasks executing concurrently per batch
+- ~40% faster execution for parallelizable plans
+- 90% context reduction per task
+
+**Alternative**: Execute directly without decomposition
+- Best for simple plans (1-3 tasks)
+- Uses sequential execution via subagent-driven-development
+- Simpler flow, no decomposition overhead
+
+**Note**: Decomposition is REQUIRED for parallel execution.
+Always decompose plans with 4+ tasks to enable parallel-subagent-driven-development.
+```
+
+## Workflow Step Prerequisites
+
+Each workflow step has prerequisites that must be satisfied:
+
+### Brainstorm (`/cc:brainstorm`)
+**Prerequisites**: None (starting point)
+
+### Research (`/cc:research`)
+**Prerequisites**:
+- ✅ Brainstorm completed
+- ✅ Feature concept defined
+
+### Write Plan (`/cc:write-plan`)
+**Prerequisites**:
+- ✅ Brainstorm completed
+- Optional: Research findings available
+
+### Parse Plan (`/cc:parse-plan`)
+**Prerequisites**:
+- ✅ Plan file exists: `docs/plans/YYYY-MM-DD-<feature>.md`
+- ✅ Plan has 2+ tasks worth decomposing
+
+### Review Plan (`/cc:review-plan`)
+**Prerequisites**:
+- ✅ Plan file exists: `docs/plans/YYYY-MM-DD-<feature>.md`
+- Optional: Plan decomposed (can review before or after decomposition)
+
+### Execute Plan (via `executing-plans` skill)
+**Prerequisites for parallel execution**:
+- ✅ Plan file exists
+- ✅ Manifest exists: `docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json`
+- ✅ Task files exist in tasks directory
+
+**Prerequisites for sequential execution**:
+- ✅ Plan file exists
+- ❌ No manifest (sequential mode)
+
+### Save State (`/cc:save`)
+**Prerequisites**: At least one of:
+- ✅ Brainstorm + research completed (for research.md)
+- ✅ Plan file exists (for planning.md)
+- ✅ Execution in progress (for execution.md)
+- ✅ Execution complete (for complete.md)
+
+### Resume (`/cc:resume <path>`)
+**Prerequisites**:
+- ✅ Valid memory file: `YYYY-MM-DD-<feature>-<stage>.md`
+- ✅ Memory file has required frontmatter metadata
+
+### Create PR (`/cc:pr`)
+**Prerequisites**:
+- ✅ On feature branch (NOT main/master)
+- ✅ Execution completed
+- ✅ Changes committed to branch
+- ✅ `gh` CLI installed and authenticated
+
+### Full Workflow (`/cc:crispy`)
+**Prerequisites**: None (orchestrates entire workflow from start)
 
 ## File Structure
 

@@ -14,7 +14,7 @@ Use the decomposing-plans skill to break down a monolithic plan into parallel ta
 **Output:**
 - Task files: One per task
 - Manifest: Defines batch execution order
-- Enables parallel execution (up to 2 tasks per batch)
+- Enables parallel execution (up to 4 tasks per batch)
 
 **Recommendation:** Always decompose plans with 4+ tasks for parallel execution.
 

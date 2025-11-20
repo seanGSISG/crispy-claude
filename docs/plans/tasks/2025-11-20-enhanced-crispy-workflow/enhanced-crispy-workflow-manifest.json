@@ -65,7 +65,8 @@
         "/vercel/next.js",
         "cc/skills/using-context7-for-docs/SKILL.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 3,
@@ -99,7 +100,8 @@
         "/articles/injection.html",
         "cc/skills/using-web-search/SKILL.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 4,
@@ -124,7 +126,8 @@
         "com/vercel/next.js",
         "vercel/next.js"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 5,
@@ -143,7 +146,8 @@
       "files": [
         "cc/agents/serena-explorer.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 6,
@@ -160,7 +164,8 @@
       "files": [
         "cc/agents/context7-researcher.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 7,
@@ -175,7 +180,8 @@
       "files": [
         "cc/agents/web-researcher.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 8,
@@ -190,7 +196,8 @@
       "files": [
         "cc/agents/github-researcher.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:11:37.538831+00:00"
     },
     {
       "id": 9,
@@ -228,7 +235,8 @@
         "src/controllers/user_controller.py",
         "src/security/auth.py"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 11,
@@ -244,7 +252,8 @@
         "src/auth/handler.py",
         "src/security/auth.py"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 12,
@@ -262,7 +271,8 @@
         "cc/skills/state-persistence/SKILL.md",
         "docs/plans/2025-11-20-user-auth.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 13,
@@ -283,7 +293,8 @@
         "docs/plans/2025-11-20-user-authentication.md",
         "user/repo.git"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 14,
@@ -310,7 +321,8 @@
       "files": [
         "cc/commands/cc/parse-plan.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 16,
@@ -325,7 +337,8 @@
       "files": [
         "cc/commands/cc/review-plan.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 17,
@@ -340,7 +353,8 @@
       "files": [
         "cc/commands/cc/save.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 18,
@@ -355,7 +369,8 @@
       "files": [
         "cc/commands/cc/resume.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 19,
@@ -373,7 +388,8 @@
         "//github.com",
         "cc/commands/cc/pr.md"
       ],
-      "status": "pending"
+      "status": "done",
+      "completed_at": "2025-11-20T02:17:31.644769+00:00"
     },
     {
       "id": 20,

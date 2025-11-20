@@ -176,7 +176,7 @@ Batches: [[1, 2], [3]]
 ---
 name: parallel-subagent-driven-development
 description: Use after decomposing-plans to execute tasks with up to 2 subagents simultaneously, with code review between batches
-allowed-tools: [Read, Write, Task, TodoWrite]
+allowed-tools: [Read, Write, Task, TodoWrite] <-- include morphllm for writing to files, serena for precise location of files>
 ---
 ```
 

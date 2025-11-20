@@ -96,21 +96,48 @@ git commit -m "feat: add specific feature"
 
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+After saving the plan, present execution options:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+```
+Plan complete and saved to `docs/plans/${filename}.md`.
 
-**1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
+## Recommended Next Step: /cc:parse-plan
 
-**2. Parallel Session (separate)** - Open new session with executing-plans, batch execution with checkpoints
+Decompose this plan into parallel task files. This enables:
+- Up to 2 tasks executing concurrently per batch
+- ~40% faster execution for parallelizable plans
+- 90% context reduction per task
 
-**Which approach?"**
+**Best for:** Plans with 4+ tasks
 
-**If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
-- Stay in this session
-- Fresh subagent per task + code review
+## Alternative: Execute Without Decomposition
 
-**If Parallel Session chosen:**
-- Guide them to open new session in worktree
-- **REQUIRED SUB-SKILL:** New session uses superpowers:executing-plans
+Use sequential execution via subagent-driven-development.
+- Best for simple plans (1-3 tasks)
+- Simpler flow, no decomposition overhead
+- One task at a time
+
+## Important
+
+Decomposition is **REQUIRED** for parallel execution.
+Always decompose plans with 4+ tasks to enable parallel-subagent-driven-development.
+
+---
+
+Which approach?
+A) Decompose plan (/cc:parse-plan) - Recommended
+B) Execute sequentially without decomposition
+C) Exit (run manually later)
+```
+
+**If user chooses A:**
+- Invoke `decomposing-plans` skill
+- Proceed with decomposition workflow
+
+**If user chooses B:**
+- Invoke `subagent-driven-development` skill
+- Execute tasks sequentially from monolithic plan
+
+**If user chooses C:**
+- Exit workflow
+- User can run `/cc:parse-plan` or execution commands later

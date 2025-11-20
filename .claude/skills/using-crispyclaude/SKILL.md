@@ -79,6 +79,23 @@ Before using a skill, announce that you are using it.
 
 The skill itself tells you which type it is.
 
+## Project-Specific Skills and Agents
+
+CrispyClaude supports creating **project-specific skills and agents** that capture your codebase's unique patterns, architecture, and conventions.
+
+**When to create them:** After Claude understands your project (either through exploration or after brainstorming), run `/cc:setup-project` to create:
+
+- **Project-specific agents** (e.g., `project-python-implementer.md`) - Implementers who understand YOUR architecture, patterns, and conventions
+- **Project-specific skills** (e.g., `project-architecture`, `project-conventions`) - Knowledge about YOUR codebase structure and standards
+
+**Benefits:**
+- Agents know your architecture patterns without re-discovery
+- Skills capture institutional knowledge
+- Consistent conventions across implementations
+- Faster onboarding for new agents/developers
+
+**Discovery:** Project-specific skills/agents are prefixed with `project-` and stored alongside generic ones. They take precedence when working on project code.
+
 ## Instructions ≠ Permission to Skip Workflows
 
 Your human partner's specific instructions describe WHAT to do, not HOW.

@@ -44,6 +44,33 @@ Start by understanding the current project context, then ask questions one at a 
 - Use superpowers:using-git-worktrees to create isolated workspace
 - Use superpowers:writing-plans to create detailed implementation plan
 
+### Next Steps
+
+After design is complete, prompt user:
+
+```
+Design complete! Ready to:
+A) Write the plan
+B) Research first (gather codebase insights, library docs, best practices)
+
+Choose: (A/B)
+```
+
+**If user chooses A:**
+- Proceed directly to `writing-plans` skill
+
+**If user chooses B:**
+- Invoke `research-orchestration` skill
+- Research skill will:
+  - Analyze brainstorm context
+  - Suggest researchers: `[✓] Codebase [✓] Library docs [✓] Web [ ] GitHub`
+  - Allow user to adjust selection
+  - Spawn selected subagents (max 4 in parallel)
+  - Synthesize findings
+  - Automatically save to `YYYY-MM-DD-<feature>-research.md`
+  - Report: "Research complete. Ready to write the plan."
+- Then proceed to `writing-plans` skill with research context
+
 ## Key Principles
 
 - **One question at a time** - Don't overwhelm with multiple questions

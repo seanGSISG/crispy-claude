@@ -13,6 +13,67 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
+## Execution Strategy
+
+This skill checks for decomposition and chooses execution method:
+
+### Detection
+
+Check for manifest file before choosing execution:
+
+```bash
+if [[ -f "docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json" ]]; then
+  # Manifest exists → Use parallel execution
+  EXECUTION_MODE="parallel"
+else
+  # No manifest → Use sequential execution
+  EXECUTION_MODE="sequential"
+fi
+```
+
+### Parallel Execution (manifest exists)
+
+**When:** `manifest.json` found in tasks directory
+
+**Process:**
+1. Load plan manifest from `docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json`
+2. Invoke `parallel-subagent-driven-development` skill with manifest
+3. Execute tasks in parallel batches (up to 2 concurrent subagents)
+4. Code review gate after each batch
+5. Continue until all tasks complete
+
+**Benefits:**
+- Up to 2 tasks run concurrently per batch
+- ~40% faster for parallelizable plans
+- 90% context reduction per task
+
+### Sequential Execution (no manifest)
+
+**When:** No `manifest.json` found
+
+**Process:**
+1. Load monolithic plan from `docs/plans/YYYY-MM-DD-<feature>.md`
+2. Invoke `subagent-driven-development` skill
+3. Execute tasks sequentially (one at a time)
+4. Code review gate after each task
+5. Continue until all tasks complete
+
+**Use case:**
+- Simple plans (1-3 tasks)
+- Sequential work that can't parallelize
+- Prefer simplicity over speed
+
+### CRITICAL Constraint
+
+⚠️ **Cannot use parallel-subagent-driven-development without manifest.json**
+
+If manifest does not exist → MUST use sequential mode (subagent-driven-development)
+
+### Recommendation
+
+Always decompose plans with 4+ tasks to enable parallel execution.
+Run `/cc:parse-plan` to create manifest before execution.
+
 ## The Process
 
 ### Step 1: Load and Review Plan

@@ -343,3 +343,38 @@ After decomposition:
 2. Review manifest for correct dependencies
 3. Announce results to user
 4. Proceed to parallel-subagent-driven-development skill
+
+## After Decomposition
+
+After decomposition completes successfully, prompt user:
+
+```
+Plan decomposed into X tasks across Y parallel batches.
+
+Manifest: `docs/plans/tasks/YYYY-MM-DD-<feature>/manifest.json`
+Tasks: `docs/plans/tasks/YYYY-MM-DD-<feature>/<task-files>`
+
+Options:
+A) Review the plan with plan-review
+B) Execute immediately with parallel-subagent-driven-development
+C) Save and exit (resume later with /cc:resume)
+
+Choose: (A/B/C)
+```
+
+**If user chooses A:**
+- Invoke `plan-review` skill
+- After review completes and plan approved
+- Return to this prompt (offer B or C)
+
+**If user chooses B:**
+- Proceed directly to `parallel-subagent-driven-development` skill
+- Begin executing tasks in parallel batches
+
+**If user chooses C:**
+- Invoke `state-persistence` skill to save execution checkpoint
+- Save as `YYYY-MM-DD-<feature>-execution.md` with:
+  - Plan reference and manifest location
+  - Status: ready to execute, 0 tasks complete
+  - Next step: Resume with `/cc:resume` and execute
+- Exit workflow after save completes

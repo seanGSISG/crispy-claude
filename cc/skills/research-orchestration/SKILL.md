@@ -1,3 +1,8 @@
+---
+name: research-orchestration
+description: Use when brainstorming completes and user selects research-first option - manages parallel research subagents (up to 4) across codebase, library docs, web, and GitHub sources, synthesizing findings and auto-saving to memory before planning
+---
+
 # Research Orchestration
 
 Use this skill to manage parallel research subagents and synthesize findings from multiple sources.

@@ -1,3 +1,8 @@
+---
+name: using-serena-for-exploration
+description: Use when exploring codebases with Serena MCP tools for architectural understanding and pattern discovery - guides efficient symbolic exploration workflow minimizing token usage through targeted symbol reads, overview tools, and progressive narrowing
+---
+
 # Using Serena for Exploration
 
 Use this skill when exploring codebases with Serena MCP tools for architectural understanding and pattern discovery.
